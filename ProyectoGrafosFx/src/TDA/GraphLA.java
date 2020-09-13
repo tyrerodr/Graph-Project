@@ -89,6 +89,7 @@ public class GraphLA<E> {
         }
         return null;
     }
+   
 
     public List<E> bfs(E data) {
         List<E> result = new LinkedList<>();
@@ -348,8 +349,8 @@ public class GraphLA<E> {
         return x;
     }
 
-    public List<E> caminoMinimo(E inicio, E fin){
-        List<E> lista = new LinkedList<>();
+    public List<Vertex<E>> caminoMinimo(E inicio, E fin){
+        List<Vertex<E>> lista = new LinkedList<>();
         if(inicio==null || fin == null) return lista;
         if(inicio.equals(fin)) return lista;
         dijkstra(inicio);
@@ -360,7 +361,7 @@ public class GraphLA<E> {
             v=v.getAntecesor();
         }
         while(!pila.empty()){
-            lista.add(pila.pop().getData());
+            lista.add(pila.pop());
         }
         return lista;    
     }

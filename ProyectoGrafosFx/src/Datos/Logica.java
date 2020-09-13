@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package proyectografos;
+package Datos;
 
 import TDA.Edge;
 import TDA.GraphLA;
@@ -28,7 +28,9 @@ import java.util.logging.Logger;
  * @author Bryan
  */
 public class Logica {
-    public static final GraphLA<String>  grafoPeliculas = new GraphLA<>(false);
+    public static GraphLA<String>  grafoPeliculas = new GraphLA<>(false);
+    
+    
     private static void dumpJSONElement(JsonElement datos) {
         if(datos.isJsonObject()){
             JsonObject obj = datos.getAsJsonObject();
@@ -66,6 +68,8 @@ public class Logica {
     
     
     }
+    
+    
     private static List<String> dumpJSONElement(JsonArray datos){
         List<String> lista = new LinkedList<>();
         for(JsonElement e:datos){
@@ -93,11 +97,7 @@ public class Logica {
             Logger.getLogger(Logica.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void main(String[] args){
-        
-        cargarPeliculas("data.txt");
-    }
-    
+   
     
 
 
