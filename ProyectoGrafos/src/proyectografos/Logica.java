@@ -5,7 +5,9 @@
  */
 package proyectografos;
 
+import TDA.Edge;
 import TDA.GraphLA;
+import TDA.Vertex;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -34,13 +36,20 @@ public class Logica {
             System.out.println();
             Map<String,String[]> map = new HashMap<>();
             for(Map.Entry<String,JsonElement> entry : entradas){
-                System.out.println(entry.getValue()+"go");
+                //System.out.println(entry.getValue()+"go");
                 if(entry.getKey().equals("cast")){
-                    for(String s :dumpJSONElement(entry.getValue().getAsJsonArray())){
-                        System.out.println(s);
-                        grafoPeliculas.addVertex(s);
+                    //System.out.println(entry);
+                    for(String actors :dumpJSONElement(entry.getValue().getAsJsonArray())){
+                        Vertex<String> v = new Vertex<>(actors);
+                        grafoPeliculas.getVertexe().add(v);
+                    }    
+                    for(String actI : grafoPeliculas.getVertexes()){
+                        for(String actS : grafoPeliculas.getVertexes())
+                            grafoPeliculas.addEdge(actI , actS , (int) Math.random()); 
                     }
-                    
+                    for(Vertex<String> v : grafoPeliculas.getVertexe()){
+                        System.out.println(v.getEdges());
+                    }
                 }
             }
 //            System.out.println(grafoPeliculas);
