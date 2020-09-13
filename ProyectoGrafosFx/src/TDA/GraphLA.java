@@ -35,6 +35,10 @@ public class GraphLA<E> {
         Vertex<E> v = new Vertex<>(data);
         return (data == null || vertexes.contains(v)) ? false : vertexes.add(v);
     }
+    
+    public boolean addVertex(Vertex<E> data){
+        return (data.getData() == null || vertexes.contains(data)) ? false : vertexes.add(data);
+    }
 
     public boolean removeVertex(E data) {
         if (data == null || vertexes.isEmpty()) {
@@ -239,6 +243,14 @@ public class GraphLA<E> {
             lista.add(v.getData());
         }
         return lista;
+    }
+    
+    public List<Vertex<E>> getVertexe(){
+        List<Vertex<E>> lista = new LinkedList<>();
+        for(Vertex<E> v :vertexes){
+            lista.add(v);
+        }
+        return vertexes;
     }
 
     public List<Set<E>> connectedComponents() {
