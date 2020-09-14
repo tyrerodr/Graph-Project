@@ -62,11 +62,7 @@ public class Logica {
                 System.out.println(v.getEdges());
             }
                   
-        }else{
-            System.out.println("Es otra cosa");
-        }
-    
-    
+        }  
     }
     
     
