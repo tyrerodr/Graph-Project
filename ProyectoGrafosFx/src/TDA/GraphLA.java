@@ -143,7 +143,7 @@ public class GraphLA<E> {
         return result;
     }
 
-    private void cleanVertexes() {
+    public void cleanVertexes() {
         for (Vertex<E> v : vertexes) {
             v.setVisited(false);
         }
@@ -350,20 +350,21 @@ public class GraphLA<E> {
     }
 
     public List<Vertex<E>> caminoMinimo(E inicio, E fin){
-        List<Vertex<E>> lista = new LinkedList<>();
-        if(inicio==null || fin == null) return lista;
-        if(inicio.equals(fin)) return lista;
-        dijkstra(inicio);
+        List<Vertex<E>> list = new LinkedList<>();
         Vertex<E> v = searchVertex(fin);
+        if(inicio == null || fin == null || v == null || inicio.equals(fin)) return list;
+        dijkstra(inicio);
         Stack<Vertex<E>> pila = new Stack<>();
-        while(v.getAntecesor()!=null){
+        pila.push(v);
+        while(v.getAntecesor() != null){
+            v = v.getAntecesor();
             pila.push(v);
-            v=v.getAntecesor();
         }
         while(!pila.empty()){
-            lista.add(pila.pop());
+            list.add(pila.pop());
         }
-        return lista;    
+        cleanVertexes();
+        return list;
     }
 
 }

@@ -55,12 +55,11 @@ public final class VentanaGrafo {
         nombres1.setItems(items);
         nombres2.setItems(items);
         Button btFind = new Button("Find Link");
-        Button btMore = new Button("More Options>>");
         HBox mensaje = new HBox();
         Label msg1 = new Label("Seleccione la opcion que desea");
         mensaje.getChildren().addAll(msg1);
         mensaje.setAlignment(Pos.CENTER);
-        HBox parteBoton = new HBox(nombres1,new Label("to"),nombres2,btFind,btMore);
+        HBox parteBoton = new HBox(nombres1,new Label("to"),nombres2,btFind);
         parteBoton.setAlignment(Pos.CENTER);
         parteBoton.setSpacing(10);
         parteExterna.getChildren().addAll(mensaje, parteBoton);
@@ -71,23 +70,21 @@ public final class VentanaGrafo {
         
         btFind.setOnMouseClicked((event) -> {
             root.getChildren().clear();
-            crearPanelTop();
-            root.setBottom(parteExterna);
             VBox todo = new VBox();
             HBox dibujo = new HBox();
             Vertex<String> n1 = (Vertex<String>) nombres1.getValue();
             Vertex<String> n2 = (Vertex<String>) nombres2.getValue();
-            
             List<Vertex<String>> num = Logica.grafoPeliculas.caminoMinimo(n1.getData(),n2.getData());
-            VBox dibujado = dibujarDistancia(n1.getData(),n2.getData(),num); 
             Label txtRes = new Label(n1.getData() + " Has a "+ n2.getData() + " Number of: " + num.size());
             Button btFinf2 = new Button("Find a different link");
             dibujo.getChildren().addAll(txtRes,btFinf2);
             dibujo.setSpacing(15);
             dibujo.setAlignment(Pos.CENTER);
-            todo.getChildren().addAll(dibujo,dibujado);
+            todo.getChildren().addAll(dibujo,dibujarDistancia(n1.getData(),n2.getData(),num));
             todo.setSpacing(10);
             root.setCenter(todo);
+            crearPanelTop();
+            root.setBottom(parteExterna);
             
             btFinf2.setOnMouseClicked((e) -> {  
             });
@@ -103,45 +100,35 @@ public final class VentanaGrafo {
         Label iniLabel = new Label(ini);
         Label finLabel = new Label(fin);
         VBox prueba = new VBox();
+        
         if(ini.equals(fin)){
             rootDibujo.getChildren().add(new Label(ini));
             rootDibujo.setAlignment(Pos.CENTER);
-
             return rootDibujo;
         }
         Iterator<Vertex<String>> iterador = recorrido.iterator();
         while(iterador.hasNext()){
             Vertex<String> v = iterador.next();
             prueba.getChildren().add(new Label(v.getData()));
-            prueba.getChildren().add(new Label("Was in"));
             for(Edge<String> e : v.getEdges()){
-                if(e.getVDestino() == v.getAntecesor()){
-                prueba.getChildren().add(new Label(e.getPeso()));   
-                }   
-            }
-            prueba.getChildren().add(new Label("With"));
-//            if(!e.getVDestino().getData().equals(ini) && val){
-//            prueba.getChildren().add(new Label(e.getVDestino().getData()));
-//            prueba.getChildren().add(new Label("Was in"));
-//            prueba.getChildren().add(new Label(String.valueOf(e.getPeso())));
-//            prueba.getChildren().add(new Label("with"));
-//            }else if (e.getVDestino().getData().equals(ini)){
-//                val = false;
-//            }
-//            if(e.getVOrigen().getData().equals(fin)){
-//                parte.getChildren().add(new Label("Was in"));
-//                parte.getChildren().add(new Label(String.valueOf(e.getPeso())));
-//                parte.getChildren().add(new Label("with"));
-//            }
-   
+                if(e.getVOrigen() == v && !v.isVisited()){
+                    prueba.getChildren().add(new Label("Was in"));
+                    prueba.getChildren().add(new Label(e.getPeso()));     
+                    prueba.getChildren().add(new Label("With"));
+                    e.getVOrigen().setVisited(true);
+                }            
+             }     
         }
-       
+        
+        Logica.grafoPeliculas.cleanVertexes();
         prueba.setAlignment(Pos.CENTER);
-        rootDibujo.getChildren().add(prueba);
+        rootDibujo.getChildren().addAll(prueba);
         rootDibujo.setAlignment(Pos.CENTER);
         return rootDibujo;
-   
-    }    
+        
+    }
+
+    
      public void crearPanelTop() {
         HBox top = new HBox();
         Label icono = new Label("MENÚ DE OPCIONES");
