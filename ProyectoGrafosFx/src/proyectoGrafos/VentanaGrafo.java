@@ -23,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import Datos.Logica;
 import TDA.*;
+import java.util.Iterator;
 import java.util.List;
 import javafx.scene.shape.Rectangle;
 import static javax.swing.text.StyleConstants.Background;
@@ -105,11 +106,20 @@ public final class VentanaGrafo {
         if(ini.equals(fin)){
             rootDibujo.getChildren().add(new Label(ini));
             rootDibujo.setAlignment(Pos.CENTER);
- 
-            return rootDibujo; 
-        }
-        
 
+            return rootDibujo;
+        }
+        Iterator<Vertex<String>> iterador = recorrido.iterator();
+        while(iterador.hasNext()){
+            Vertex<String> v = iterador.next();
+            prueba.getChildren().add(new Label(v.getData()));
+            prueba.getChildren().add(new Label("Was in"));
+            for(Edge<String> e : v.getEdges()){
+                if(e.getVDestino() == v.getAntecesor()){
+                prueba.getChildren().add(new Label(e.getPeso()));   
+                }   
+            }
+            prueba.getChildren().add(new Label("With"));
 //            if(!e.getVDestino().getData().equals(ini) && val){
 //            prueba.getChildren().add(new Label(e.getVDestino().getData()));
 //            prueba.getChildren().add(new Label("Was in"));
@@ -123,15 +133,15 @@ public final class VentanaGrafo {
 //                parte.getChildren().add(new Label(String.valueOf(e.getPeso())));
 //                parte.getChildren().add(new Label("with"));
 //            }
-    
-        
-        
+   
+        }
+       
         prueba.setAlignment(Pos.CENTER);
         rootDibujo.getChildren().add(prueba);
         rootDibujo.setAlignment(Pos.CENTER);
         return rootDibujo;
-    }
-    
+   
+    }    
      public void crearPanelTop() {
         HBox top = new HBox();
         Label icono = new Label("MENÚ DE OPCIONES");
