@@ -315,43 +315,43 @@ public class GraphLA<E> {
         return x;
     }
 
-    public List<String> caminoMinDijkstra(E inicio, E fin){
-        List<String> list = new ArrayList<>();
+    public List<Vertex<E>> caminoMinDijkstra(E inicio, E fin){
+        List<Vertex<E>> list = new ArrayList<>();
         Vertex<E> v = searchVertex(fin);
         if(inicio == null || fin == null || v == null) return list;
         dijkstra(inicio);
-        list.add(v.getData().toString());
+        list.add(v);
         while(v.getAntecesor() != null){
             v = v.getAntecesor();
-            list.add(v.getData().toString());
+            list.add(v);
         }
         cleanVertexes();
         return list;
     }
     
-    public List<String> caminoBFS(E inicio, E fin){
-        List<String> list = new ArrayList<>();
+    public List<Vertex<E>> caminoBFS(E inicio, E fin){
+        List<Vertex<E>> list = new ArrayList<>();
         Vertex<E> v = searchVertex(fin);
         if(inicio == null || fin == null || v == null) return list;
         bfs(inicio);
-        list.add(v.getData().toString());
+        list.add(v);
         while(v.getAntecesor() != null){
             v = v.getAntecesor();
-            list.add(v.getData().toString());
+            list.add(v);
         }
         cleanVertexes();
         return list;
     }
     
-    public List<String> caminoDFS(E inicio, E fin){
-        List<String> list = new ArrayList<>();
+    public List<Vertex<E>> caminoDFS(E inicio, E fin){
+        List<Vertex<E>> list = new ArrayList<>();
         Vertex<E> v = searchVertex(fin);
         if(inicio == null || fin == null || v == null) return list;
         dfs(inicio);
-        list.add(v.getData().toString());
+        list.add(v);
         while(v.getAntecesor() != null){
             v = v.getAntecesor();
-            list.add(v.getData().toString());
+            list.add(v);
         }
         cleanVertexes();
         return list;

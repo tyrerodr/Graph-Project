@@ -111,12 +111,16 @@ public final class VentanaGrafo {
                 Label ltimeD = new Label("Tiempo de ejecucion para DIJKSTRA es:"  +  tiempoFin + "ns");
                 Label lnumD = new Label("Distancia Minima: " + numEdge);
                 dijkstraVBox.getChildren().addAll(tituloDijkstra, ltimeD, lnumD);
-                List<String> camD = Logica.grafoPeliculas.caminoMinDijkstra(v1.getData(), v2.getData());
-                Iterator<String> litD = camD.listIterator();
+                List<Vertex<String>> camD = Logica.grafoPeliculas.caminoMinDijkstra(v1.getData(), v2.getData());
+                Iterator<Vertex<String>> litD = camD.listIterator();
                 VBox dibujoCaminos = new VBox();
                 while(litD.hasNext()){
-                    String i = litD.next();
-                    dibujoCaminos.getChildren().add(new Label(i));
+                    Vertex<String> i = litD.next();
+                    for(Vertex<String> vrt : camD){
+                        Logica.grafoPeliculas.addEdge(i.getData(), vrt.getData(),"NOMBRE DE PELICULA" );                        
+                    }
+
+                    dibujoCaminos.getChildren().add(new Label(i.getData()));
 //                    if(litD.previousIndex()%2==0){
 //                        Label lAct = new Label(i);
 //                        lAct.setId("txtActor");
@@ -154,13 +158,13 @@ public final class VentanaGrafo {
                 Label ltimeD = new Label("Tiempo de ejecucion para BFS es:"  +  tiempoFin + "ns");
                 Label lnumD = new Label("Distancia Minima: " + numEdge);
                 bfsVBox.getChildren().addAll(tituloBfs, ltimeD, lnumD);
-                List<String> camD = Logica.grafoPeliculas.caminoBFS(v1.getData(), v2.getData());
-                Iterator<String> litD = camD.listIterator();
+                List<Vertex<String>> camD = Logica.grafoPeliculas.caminoBFS(v1.getData(), v2.getData());
+                Iterator<Vertex<String>> litD = camD.listIterator();
                 VBox dibujoCaminos = new VBox();
                 dibujoCaminos.setId("vResults");
                 while(litD.hasNext()){
-                    String i = litD.next();
-                    dibujoCaminos.getChildren().add(new Label(i));
+                    Vertex<String> i = litD.next();
+                    dibujoCaminos.getChildren().add(new Label(i.getData()));
 //                    if(litD.previousIndex()%2==0){
 //                        Label lAct = new Label(i);
 //                        lAct.setId("txtActor");
@@ -199,13 +203,13 @@ public final class VentanaGrafo {
                 Label ltimeD = new Label("Tiempo de ejecucion para DFS es:"  +  tiempoFin + "ns");
                 Label lnumD = new Label("Distancia Minima: " + numEdge);
                 dfsVBox.getChildren().addAll(tituloDfs, ltimeD, lnumD);
-                List<String> camD = Logica.grafoPeliculas.caminoDFS(v1.getData(), v2.getData());
-                Iterator<String> litD = camD.listIterator();
+                List<Vertex<String>> camD = Logica.grafoPeliculas.caminoDFS(v1.getData(), v2.getData());
+                Iterator<Vertex<String>> litD = camD.listIterator();
                 VBox dibujoCaminos = new VBox();
                 dibujoCaminos.setId("vResults");
                 while(litD.hasNext()){
-                    String i = litD.next();
-                    dibujoCaminos.getChildren().add(new Label(i));
+                    Vertex<String> i = litD.next();
+                    dibujoCaminos.getChildren().add(new Label(i.getData()));
 //                    if(litD.previousIndex()%2==0){
 //                        Label lAct = new Label(i);
 //                        lAct.setId("txtActor");
