@@ -31,7 +31,6 @@ import java.util.List;
  * @author Bryan
  */
 public final class VentanaGrafo {
-    final FileChooser fileChooser = new FileChooser();
     public static BorderPane root = new BorderPane();
 
 
@@ -82,8 +81,8 @@ public final class VentanaGrafo {
             root.setCenter(todo);
             crearPanelTop();
             root.setBottom(parteExterna);
-                });
-                }
+            });
+            }
     
 
     public VBox dibujarDistancia(String ini, String fin,List<Vertex<String>> recorrido){
@@ -130,9 +129,7 @@ public final class VentanaGrafo {
         root.setTop(top);
      }
      
-    
- 
-        
+
     public static BorderPane getRoot() {
         return root;
     }
