@@ -86,11 +86,6 @@ public final class VentanaGrafo {
             crearPanelTop();
             root.setBottom(parteExterna);
             
-            btFinf2.setOnMouseClicked((e) -> {  
-            });
-            
-            
-            
                 });
                 }
     
@@ -100,7 +95,7 @@ public final class VentanaGrafo {
         Label iniLabel = new Label(ini);
         Label finLabel = new Label(fin);
         VBox prueba = new VBox();
-        
+        rootDibujo.getChildren().clear();
         if(ini.equals(fin)){
             rootDibujo.getChildren().add(new Label(ini));
             rootDibujo.setAlignment(Pos.CENTER);
@@ -111,7 +106,7 @@ public final class VentanaGrafo {
             Vertex<String> v = iterador.next();
             prueba.getChildren().add(new Label(v.getData()));
             for(Edge<String> e : v.getEdges()){
-                if(e.getVOrigen() == v && !v.isVisited()){
+                if(e.getVOrigen() == v && !v.isVisited() && !v.getData().equals(fin)){
                     prueba.getChildren().add(new Label("Was in"));
                     prueba.getChildren().add(new Label(e.getPeso()));     
                     prueba.getChildren().add(new Label("With"));
