@@ -5,14 +5,13 @@
  */
 package Datos;
 
-import TDA.Edge;
+
 import TDA.GraphLA;
 import TDA.Vertex;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,7 +20,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,12 +39,10 @@ public class Logica {
             String tmp = "";
             Map<String,String[]> map = new HashMap<>();
              for(Map.Entry<String,JsonElement> entry : entradas){
-                //System.out.println(entry.getValue()+"go");
                 if(entry.getKey().equals("title")){
                     tmp = entry.getValue().getAsString();
                 }   
                 if(entry.getKey().equals("cast")){
-                    //System.out.println(entry);
                     for(String actors :dumpJSONElement(entry.getValue().getAsJsonArray())){
                         grafoPeliculas.addVertex(actors);
                         listaActores.add(actors);
@@ -65,19 +61,8 @@ public class Logica {
             for(Vertex<String> v : grafoPeliculas.getVertexe()){
                 System.out.println(v.getEdges());
             }
-//            System.out.println(grafoPeliculas);
-            
-        }else if(datos.isJsonArray()){
-            
-        }else if(datos.isJsonPrimitive()){
-            
-        }else if(datos.isJsonNull()){
-            
-        }else{
-            System.out.println("Es otra cosa");
-        }
-    
-    
+                  
+        }  
     }
     
     
@@ -97,8 +82,6 @@ public class Logica {
 
 
     public static void cargarPeliculas(String texto){
-     //Puede que se lea de un txt   
-     
      JsonParser parser = new JsonParser();
         try {
             BufferedReader fr = new BufferedReader(new FileReader("src\\Datos\\"+texto));

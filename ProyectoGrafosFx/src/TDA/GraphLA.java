@@ -315,7 +315,7 @@ public class GraphLA<E> {
         return x;
     }
 
-    public List<String> getCaminoDijkstra(E inicio, E fin){
+    public List<String> caminoMinDijkstra(E inicio, E fin){
         List<String> list = new ArrayList<>();
         Vertex<E> v = searchVertex(fin);
         if(inicio == null || fin == null || v == null) return list;
@@ -329,7 +329,7 @@ public class GraphLA<E> {
         return list;
     }
     
-    public List<String> getCaminoBFS(E inicio, E fin){
+    public List<String> caminoBFS(E inicio, E fin){
         List<String> list = new ArrayList<>();
         Vertex<E> v = searchVertex(fin);
         if(inicio == null || fin == null || v == null) return list;
@@ -343,7 +343,7 @@ public class GraphLA<E> {
         return list;
     }
     
-    public List<String> getCaminoDFS(E inicio, E fin){
+    public List<String> caminoDFS(E inicio, E fin){
         List<String> list = new ArrayList<>();
         Vertex<E> v = searchVertex(fin);
         if(inicio == null || fin == null || v == null) return list;

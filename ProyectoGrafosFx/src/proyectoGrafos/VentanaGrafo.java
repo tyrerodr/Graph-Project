@@ -32,7 +32,6 @@ import static javax.swing.text.StyleConstants.Background;
  * @author Bryan
  */
 public final class VentanaGrafo {
-    final FileChooser fileChooser = new FileChooser();
     public static BorderPane root = new BorderPane();
 
 
@@ -41,7 +40,6 @@ public final class VentanaGrafo {
         root.setStyle("-fx-background-color: #ffffff;");
         crearPanelTop();
         center();
-        
     }
 
     
@@ -66,17 +64,17 @@ public final class VentanaGrafo {
         parteExterna.setSpacing(15);
         root.setCenter(parteExterna);
         
-        
         btFind.setOnMouseClicked((event) -> {
             root.getChildren().clear();
             VBox todo = new VBox();
             HBox dibujo = new HBox();
             Vertex<String> n1 = (Vertex<String>) nombres1.getValue();
             Vertex<String> n2 = (Vertex<String>) nombres2.getValue();
-            List<Vertex<String>> num = Logica.grafoPeliculas.caminoMinimo(n1.getData(),n2.getData());
-            Label txtRes = new Label(n1.getData() + " Has a "+ n2.getData() + " Number of: " + num.size());
-            Button btFinf2 = new Button("Find a different link");
-            dibujo.getChildren().addAll(txtRes,btFinf2);
+            List<String> num = Logica.grafoPeliculas.caminoMinDijkstra(n1.getData(),n2.getData());
+            int aristas = num.size() -1 ;
+            if(aristas == -1) aristas = 0;
+            Label txtRes = new Label(n1.getData() + " Has a "+ n2.getData() + " Number of: " + aristas);
+            dibujo.getChildren().addAll(txtRes);
             dibujo.setSpacing(15);
             dibujo.setAlignment(Pos.CENTER);
             todo.getChildren().addAll(dibujo,dibujarDistancia(n1.getData(),n2.getData(),num));
@@ -84,21 +82,19 @@ public final class VentanaGrafo {
             root.setCenter(todo);
             crearPanelTop();
             root.setBottom(parteExterna);
-            
-                });
-                }
+            });
+            }
     
 
     public VBox dibujarDistancia(String ini, String fin,List<Vertex<String>> recorrido){
         VBox rootDibujo = new VBox();
-        Label iniLabel = new Label(ini);
-        Label finLabel = new Label(fin);
         VBox prueba = new VBox();
         if(ini.equals(fin)){
             rootDibujo.getChildren().add(new Label(ini));
             rootDibujo.setAlignment(Pos.CENTER);
             return rootDibujo;
         }
+        
         Iterator<Vertex<String>> iterador = recorrido.iterator();
         while(iterador.hasNext()){
             Vertex<String> v = iterador.next();
@@ -134,9 +130,7 @@ public final class VentanaGrafo {
         root.setTop(top);
      }
      
-    
- 
-        
+
     public static BorderPane getRoot() {
         return root;
     }
