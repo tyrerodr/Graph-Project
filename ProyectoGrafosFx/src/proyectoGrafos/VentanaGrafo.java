@@ -42,7 +42,6 @@ public final class VentanaGrafo {
         root.setStyle("-fx-background-color: #ffffff;");
         crearPanelTop();
         center();
-        
     }
 
     
@@ -91,8 +90,6 @@ public final class VentanaGrafo {
 
     public VBox dibujarDistancia(String ini, String fin,List<Vertex<String>> recorrido){
         VBox rootDibujo = new VBox();
-        Label iniLabel = new Label(ini);
-        Label finLabel = new Label(fin);
         VBox prueba = new VBox();
 
         if(ini.equals(fin)){
@@ -106,7 +103,7 @@ public final class VentanaGrafo {
             Vertex<String> v = iterador.next();
             prueba.getChildren().add(new Label(v.getData()));
             for(Edge<String> e : v.getEdges()){
-                if(e.getVOrigen() == v && !v.isVisited() && !v.getData().equals(fin)){
+                if(e.getVOrigen().equals(v) && !v.isVisited() && !v.getData().equals(fin)){
                     prueba.getChildren().add(new Label("Was in"));
                     prueba.getChildren().add(new Label(e.getPeso()));     
                     prueba.getChildren().add(new Label("With"));
