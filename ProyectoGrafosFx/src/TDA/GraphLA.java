@@ -1,6 +1,7 @@
 package TDA;
 
 
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -91,58 +92,6 @@ public class GraphLA<E> {
     }
    
 
-    public List<E> bfs(E data) {
-        List<E> result = new LinkedList<>();
-        if (data == null) {
-            return result;
-        }
-        Vertex<E> v = searchVertex(data);
-        if (v == null) {
-            return result;
-        }
-        Queue<Vertex<E>> cola = new LinkedList<>();
-        v.setVisited(true);
-        cola.offer(v);
-        while (!cola.isEmpty()) {
-            v = cola.poll();
-            result.add(v.getData());
-            for (Edge<E> e : v.getEdges()) {
-                if (!e.getVDestino().isVisited()) {
-                    e.getVDestino().setVisited(true);
-                    cola.offer(e.getVDestino());
-                }
-            }
-        }
-        cleanVertexes();
-        return result;
-    }
-
-    public List<E> dfs(E data) {
-        List<E> result = new LinkedList<>();
-        if (data == null) {
-            return result;
-        }
-        Vertex<E> v = searchVertex(data);
-        if (v == null) {
-            return result;
-        }
-        Deque<Vertex<E>> pila = new LinkedList<>();
-        v.setVisited(true);
-        pila.offer(v);
-        while (!pila.isEmpty()) {
-            v = pila.poll();
-            result.add(v.getData());
-            for (Edge<E> e : v.getEdges()) {
-                if (!e.getVDestino().isVisited()) {
-                    e.getVDestino().setVisited(true);
-                    pila.offer(e.getVDestino());
-                }
-            }
-        }
-        cleanVertexes();
-        return result;
-    }
-
     public void cleanVertexes() {
         for (Vertex<E> v : vertexes) {
             v.setVisited(false);
@@ -217,14 +166,14 @@ public class GraphLA<E> {
         sbra.append("}");
         return sbrv.toString() + "\n" + sbra.toString();
     }
-
-    public boolean isConnected() {
-        if(directed && connectedComponents().size()!=1) return false;
-        if(directed && connectedComponents().size()==1) return true;
-        if(!directed && connectedComponents().size()!=1) return false;
-        if(!directed && connectedComponents().size()==1) return true;
-        return false;
-    }
+//
+//    public boolean isConnected() {
+//        if(directed && connectedComponents().size()!=1) return false;
+//        if(directed && connectedComponents().size()==1) return true;
+//        if(!directed && connectedComponents().size()!=1) return false;
+//        if(!directed && connectedComponents().size()==1) return true;
+//        return false;
+//    }
 
     public GraphLA<E> reverse() {
         GraphLA<E> grafo = new GraphLA<E>(directed); 
@@ -254,84 +203,37 @@ public class GraphLA<E> {
         return vertexes;
     }
 
-    public List<Set<E>> connectedComponents() {
-        LinkedList<Set<E>> result = new LinkedList<>();
-        GraphLA<E> reversed = reverse();
-        Set<E> componentes = new HashSet<>(getVertexes());
-        while(!componentes.isEmpty()){
-            E origen = (E) componentes.toArray()[0];
-            List<E> bfsNormal = bfs(origen);
-            List<E> bfsInvertido = reversed.bfs(origen);
-            Set<E> conjBfsN = new HashSet<>(bfsNormal);
-            Set<E> conjBfsI = new HashSet<>(bfsInvertido);
-            conjBfsN.retainAll(conjBfsI);
-            componentes.removeAll(conjBfsN);
-            result.add(conjBfsN);    
-        }
-        return result;
-    }
+//    public List<Set<E>> connectedComponents() {
+//        LinkedList<Set<E>> result = new LinkedList<>();
+//        GraphLA<E> reversed = reverse();
+//        Set<E> componentes = new HashSet<>(getVertexes());
+//        while(!componentes.isEmpty()){
+//            E origen = (E) componentes.toArray()[0];
+//            List<E> bfsNormal = bfs(origen);
+//            List<E> bfsInvertido = reversed.bfs(origen);
+//            Set<E> conjBfsN = new HashSet<>(bfsNormal);
+//            Set<E> conjBfsI = new HashSet<>(bfsInvertido);
+//            conjBfsN.retainAll(conjBfsI);
+//            componentes.removeAll(conjBfsN);
+//            result.add(conjBfsN);    
+//        }
+//        return result;
+//    }
     
-//    public GraphLA<E> kruskal(){
-//        GraphLA<E> kruskal = new GraphLA<>(directed);
-//        PriorityQueue<Edge<E>> cola = new PriorityQueue<>((Edge<E> e1,Edge<E> e2)->(e1.getPeso()-e2.getPeso()));
-//        for(Vertex<E> v :vertexes){
-//            kruskal.addVertex(v.getData());
-//        }
-//        for(Vertex<E> v : vertexes){
-//            for(Edge<E> e: v.getEdges()){
-//                cola.offer(e);
-//            }
-//        }
-//        
-//        while(!kruskal.isConnected()){
-//            List<Set<E>> lista = kruskal.connectedComponents();
-//            Edge<E> edge = cola.poll();
-//            for(Set<E> conjunto:lista){
-//                if(conjunto.contains(edge.getVOrigen().getData()) && !conjunto.contains(edge.getVDestino().getData())){
-//                    kruskal.addEdge(edge.getVOrigen().getData(),edge.getVDestino().getData(),edge.getPeso());
-//                }
-//            }
-//        }
-//        return kruskal;
-//        
-//    }
-//    public GraphLA prim(){
-//        GraphLA<E> prim = new GraphLA<>(directed);
-//        PriorityQueue<Edge<E>> colaEdges = new PriorityQueue<>((Edge<E> e1, Edge<E> e2)->(e1.getPeso()-e2.getPeso()));
-//        for(Vertex<E> v :vertexes){
-//            prim.addVertex(v.getData());
-//        }
-//        Vertex<E> vo = vertexes.get(0);
-//        vo.setVisited(true);
-//        int visitados=1;
-//        while(visitados<prim.vertexes.size()){
-//            for(Edge<E> e: vo.getEdges()){
-//                if(!e.getVDestino().isVisited())
-//                    colaEdges.add(e);
-//            }
-//            Edge<E> edge = colaEdges.poll();
-//            edge.getVDestino().setVisited(true);
-//            prim.addEdge(edge.getVOrigen().getData(),edge.getVDestino().getData(),edge.getPeso());
-//            vo = edge.getVDestino();
-//            visitados++;
-//        }
-//        cleanVertexes();
-//        return prim;
-//    }
 
-
-    public void dijkstra(E inicio){
+    private void dijkstra(E inicio){
         Vertex<E> v = searchVertex(inicio);
-        PriorityQueue<Vertex<E>> cola = new PriorityQueue<>((Vertex<E> v1, Vertex<E> v2) -> v1.getDistancia() - v2.getDistancia());
+        if(v == null) throw new NullPointerException();
+        PriorityQueue<Vertex<E>> cola = new PriorityQueue<>((Vertex<E> v1, Vertex<E> v2)->v1.getDistancia()- v2.getDistancia());
         v.setDistancia(0);
         cola.offer(v);
         while(!cola.isEmpty()){
             v = cola.poll();
             v.setVisited(true);
-            for(Edge<E> e : v.getEdges()){
+            for(Edge<E> e: v.getEdges()){
                 if(!e.getVDestino().isVisited()){
-                    if(v.getDistancia() + 1 < e.getVDestino().getDistancia()){
-                        e.getVDestino().setDistancia(v.getDistancia() + 1);
+                    if(v.getDistancia()+1 < e.getVDestino().getDistancia()){
+                        e.getVDestino().setDistancia(v.getDistancia()+1);
                         e.getVDestino().setAntecesor(v);
                         cola.offer(e.getVDestino());
                     }
@@ -339,32 +241,121 @@ public class GraphLA<E> {
             }
         }
     }
+    
+    private void bfs(E data){
+        Vertex<E> v = searchVertex(data);
+        if(v == null) throw new NullPointerException();
 
-    public int menorDistancia(E inicio, E fin){
-        if(inicio==null || fin == null) return -1;
+        Queue<Vertex<E>> cola = new LinkedList<>();
+        v.setDistancia(0);      
+        cola.offer(v);
+        while(!cola.isEmpty()){
+            v = cola.poll();
+            v.setVisited(true); 
+            for(Edge<E> e: v.getEdges()){
+                if(!e.getVDestino().isVisited()){
+                    e.getVDestino().setDistancia(v.getDistancia()+1);
+                    e.getVDestino().setAntecesor(v);
+                    cola.offer(e.getVDestino());
+                }
+            }
+        }
+    }
+
+    private void dfs(E data){
+        Vertex<E> v = searchVertex(data);
+        if(v == null) throw new NullPointerException();
+
+        Deque<Vertex<E>> pila = new LinkedList<>();
+        v.setDistancia(0);      
+        pila.push(v);
+        while(!pila.isEmpty()){
+            v = pila.pop();
+            v.setVisited(true); 
+            for(Edge<E> e: v.getEdges()){
+                if(!e.getVDestino().isVisited()){
+                    e.getVDestino().setDistancia(v.getDistancia()+1);
+                    e.getVDestino().setAntecesor(v);
+                    pila.push(e.getVDestino());
+                }
+            }
+        }
+    }
+    
+    public int numEdgesDijkstra(E inicio, E fin){
+        if(inicio == null || fin == null) return -1;
         if(inicio.equals(fin)) return 0;
         dijkstra(inicio);
-        int x =searchVertex(fin).getDistancia();
+        Vertex<E> v = searchVertex(fin);
+        if(v==null) return 0;
+        int x = v.getDistancia();
+        cleanVertexes();
+        return x;
+    }
+    
+    public int numEdgesBFS(E inicio, E fin){
+        if(inicio == null || fin == null) return -1;
+        if(inicio.equals(fin)) return 0;
+        bfs(inicio);
+        Vertex<E> v = searchVertex(fin);
+        if(v==null) return 0;
+        int x = v.getDistancia();
+        cleanVertexes();
+        return x;
+    }
+    
+    public int numEdgesDFS(E inicio, E fin){
+        if(inicio == null || fin == null) return -1;
+        if(inicio.equals(fin)) return 0;
+        dfs(inicio);
+        Vertex<E> v = searchVertex(fin);
+        if(v==null) return 0;
+        int x = v.getDistancia();
         cleanVertexes();
         return x;
     }
 
-    public List<Vertex<E>> caminoMinimo(E inicio, E fin){
-        List<Vertex<E>> list = new LinkedList<>();
+    public List<String> getCaminoDijkstra(E inicio, E fin){
+        List<String> list = new ArrayList<>();
         Vertex<E> v = searchVertex(fin);
-        if(inicio == null || fin == null || v == null || inicio.equals(fin)) return list;
+        if(inicio == null || fin == null || v == null) return list;
         dijkstra(inicio);
-        Stack<Vertex<E>> pila = new Stack<>();
-        pila.push(v);
+        list.add(v.getData().toString());
         while(v.getAntecesor() != null){
             v = v.getAntecesor();
-            pila.push(v);
-        }
-        while(!pila.empty()){
-            list.add(pila.pop());
+            list.add(v.getData().toString());
         }
         cleanVertexes();
         return list;
     }
-
+    
+    public List<String> getCaminoBFS(E inicio, E fin){
+        List<String> list = new ArrayList<>();
+        Vertex<E> v = searchVertex(fin);
+        if(inicio == null || fin == null || v == null) return list;
+        bfs(inicio);
+        list.add(v.getData().toString());
+        while(v.getAntecesor() != null){
+            v = v.getAntecesor();
+            list.add(v.getData().toString());
+        }
+        cleanVertexes();
+        return list;
+    }
+    
+    public List<String> getCaminoDFS(E inicio, E fin){
+        List<String> list = new ArrayList<>();
+        Vertex<E> v = searchVertex(fin);
+        if(inicio == null || fin == null || v == null) return list;
+        dfs(inicio);
+        list.add(v.getData().toString());
+        while(v.getAntecesor() != null){
+            v = v.getAntecesor();
+            list.add(v.getData().toString());
+        }
+        cleanVertexes();
+        return list;
+    }
 }
+
+

@@ -25,7 +25,6 @@ import Datos.Logica;
 import TDA.*;
 import java.util.Iterator;
 import java.util.List;
-import javafx.scene.shape.Rectangle;
 import static javax.swing.text.StyleConstants.Background;
 
 /**
@@ -95,7 +94,6 @@ public final class VentanaGrafo {
         Label iniLabel = new Label(ini);
         Label finLabel = new Label(fin);
         VBox prueba = new VBox();
-        rootDibujo.getChildren().clear();
         if(ini.equals(fin)){
             rootDibujo.getChildren().add(new Label(ini));
             rootDibujo.setAlignment(Pos.CENTER);
@@ -104,9 +102,10 @@ public final class VentanaGrafo {
         Iterator<Vertex<String>> iterador = recorrido.iterator();
         while(iterador.hasNext()){
             Vertex<String> v = iterador.next();
+            System.out.println(v.getData());
             prueba.getChildren().add(new Label(v.getData()));
             for(Edge<String> e : v.getEdges()){
-                if(e.getVOrigen() == v && !v.isVisited() && !v.getData().equals(fin)){
+                if(e.getVOrigen().getData().equals(v.getData()) && !v.isVisited() && !v.getData().equals(fin)){
                     prueba.getChildren().add(new Label("Was in"));
                     prueba.getChildren().add(new Label(e.getPeso()));     
                     prueba.getChildren().add(new Label("With"));
