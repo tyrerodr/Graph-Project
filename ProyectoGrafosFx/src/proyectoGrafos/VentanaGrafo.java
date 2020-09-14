@@ -7,8 +7,7 @@ package proyectoGrafos;
 
 
 
-import java.io.File;
-import java.util.HashMap;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,12 +18,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
-import javax.swing.JButton;
+import Datos.Logica;
+import TDA.*;
+import java.util.List;
+import javafx.scene.shape.Rectangle;
+import static javax.swing.text.StyleConstants.Background;
 
 /**
  *
@@ -48,8 +49,8 @@ public final class VentanaGrafo {
         VBox parteExterna = new VBox();
         ComboBox nombres1 = new ComboBox ();
         ComboBox nombres2 = new ComboBox ();
-        ObservableList<String> items = FXCollections.observableArrayList();
-        items.addAll("Apple", "Banana", "pera","fresa", "Peach", "naranja", "ciruelo","Apple", "Banana", "pera","fresa", "Peach", "naranja", "ciruelo","Apple", "Banana", "pera","fresa", "Peach", "naranja", "ciruelo");
+        ObservableList<Vertex<String>> items = FXCollections.observableArrayList();
+        items.addAll(Logica.grafoPeliculas.getVertexe());
         nombres1.setItems(items);
         nombres2.setItems(items);
         Button btFind = new Button("Find Link");
@@ -73,27 +74,62 @@ public final class VentanaGrafo {
             root.setBottom(parteExterna);
             VBox todo = new VBox();
             HBox dibujo = new HBox();
-            VBox dibujado = dibujarDistancia(); 
-            Label txtRes = new Label(nombres1.getValue() + "Has a"+ nombres2.getValue() + "Number of:" );
+            Vertex<String> n1 = (Vertex<String>) nombres1.getValue();
+            Vertex<String> n2 = (Vertex<String>) nombres2.getValue();
+            
+            List<Vertex<String>> num = Logica.grafoPeliculas.caminoMinimo(n1.getData(),n2.getData());
+            VBox dibujado = dibujarDistancia(n1.getData(),n2.getData(),num); 
+            Label txtRes = new Label(n1.getData() + " Has a "+ n2.getData() + " Number of: " + num.size());
             Button btFinf2 = new Button("Find a different link");
             dibujo.getChildren().addAll(txtRes,btFinf2);
             dibujo.setSpacing(15);
             dibujo.setAlignment(Pos.CENTER);
             todo.getChildren().addAll(dibujo,dibujado);
-  
-            
+            todo.setSpacing(10);
             root.setCenter(todo);
             
             btFinf2.setOnMouseClicked((e) -> {  
             });
             
+            
+            
                 });
                 }
     
 
-    public VBox dibujarDistancia(){
+    public VBox dibujarDistancia(String ini, String fin,List<Vertex<String>> recorrido){
         VBox rootDibujo = new VBox();
+        Label iniLabel = new Label(ini);
+        Label finLabel = new Label(fin);
+        VBox prueba = new VBox();
+        if(ini.equals(fin)){
+            rootDibujo.getChildren().add(new Label(ini));
+            rootDibujo.setAlignment(Pos.CENTER);
+ 
+            return rootDibujo; 
+        }
         
+        for(Vertex<String> v : recorrido){
+              System.out.println(v); 
+//            if(!e.getVDestino().getData().equals(ini) && val){
+//            prueba.getChildren().add(new Label(e.getVDestino().getData()));
+//            prueba.getChildren().add(new Label("Was in"));
+//            prueba.getChildren().add(new Label(String.valueOf(e.getPeso())));
+//            prueba.getChildren().add(new Label("with"));
+//            }else if (e.getVDestino().getData().equals(ini)){
+//                val = false;
+//            }
+//            if(e.getVOrigen().getData().equals(fin)){
+//                parte.getChildren().add(new Label("Was in"));
+//                parte.getChildren().add(new Label(String.valueOf(e.getPeso())));
+//                parte.getChildren().add(new Label("with"));
+//            }
+    
+        }
+        
+        prueba.setAlignment(Pos.CENTER);
+        rootDibujo.getChildren().add(prueba);
+        rootDibujo.setAlignment(Pos.CENTER);
         return rootDibujo;
     }
     

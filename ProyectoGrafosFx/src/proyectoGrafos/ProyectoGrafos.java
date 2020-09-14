@@ -6,12 +6,12 @@
 package proyectoGrafos;
 
 
+import Datos.Logica;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import static javafx.application.Application.launch;
-
 
 /**
  *
@@ -23,8 +23,8 @@ public class ProyectoGrafos extends Application {
     
     @Override
     public void init(){
-       
-    }
+        Logica.cargarPeliculas("data.txt");
+            }
 
     public void start(Stage primaryStage){      
         VentanaGrafo i = new VentanaGrafo();
