@@ -13,8 +13,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,24 +35,28 @@ public class Logica {
         if(datos.isJsonObject()){
             JsonObject obj = datos.getAsJsonObject();
             java.util.Set<Map.Entry<String,JsonElement>> entradas = obj.entrySet();
-            System.out.println();
+            LinkedList<String> listaActores = new LinkedList<>();
             Map<String,String[]> map = new HashMap<>();
-            for(Map.Entry<String,JsonElement> entry : entradas){
+             for(Map.Entry<String,JsonElement> entry : entradas){
                 //System.out.println(entry.getValue()+"go");
                 if(entry.getKey().equals("cast")){
                     //System.out.println(entry);
                     for(String actors :dumpJSONElement(entry.getValue().getAsJsonArray())){
-                        Vertex<String> v = new Vertex<>(actors);
-                        grafoPeliculas.getVertexe().add(v);
+                        grafoPeliculas.addVertex(actors);
+                        listaActores.add(actors);
                     }    
-                    for(String actI : grafoPeliculas.getVertexes()){
-                        for(String actS : grafoPeliculas.getVertexes())
-                            grafoPeliculas.addEdge(actI , actS , (int) Math.random()); 
-                    }
-                    for(Vertex<String> v : grafoPeliculas.getVertexe()){
-                        System.out.println(v.getEdges());
-                    }
                 }
+            } 
+            System.out.println("ACTORES");
+            for(String actI : listaActores){
+                for(String actS : listaActores){
+                    if(!actI.equals(actS))
+                        grafoPeliculas.addEdge(actI , actS , (int) Math.random()); 
+                }                        
+            }
+            System.out.println("EDGES");
+            for(Vertex<String> v : grafoPeliculas.getVertexe()){
+                System.out.println(v.getEdges());
             }
 //            System.out.println(grafoPeliculas);
             
@@ -86,16 +92,21 @@ public class Logica {
      
      JsonParser parser = new JsonParser();
         try {
-            JsonReader fr = new JsonReader(new FileReader("src\\Datos\\"+texto));
-            JsonElement datos = parser.parse(fr);
-            dumpJSONElement(datos);
+            BufferedReader fr = new BufferedReader(new FileReader("src\\Datos\\"+texto));
+            String linea="";
+            while(linea!=null){
+                linea=fr.readLine();
+                JsonElement datos = parser.parse(linea);
+                dumpJSONElement(datos);
+            }
         } catch (FileNotFoundException ex) {
+            Logger.getLogger(Logica.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
             Logger.getLogger(Logica.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     public static void main(String[] args){
-        
-        cargarPeliculas("data.txt");
+        cargarPeliculas("data2.txt");
     }
     
     
