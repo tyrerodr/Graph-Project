@@ -38,9 +38,13 @@ public class Logica {
             JsonObject obj = datos.getAsJsonObject();
             java.util.Set<Map.Entry<String,JsonElement>> entradas = obj.entrySet();
             LinkedList<String> listaActores = new LinkedList<>();
+            String tmp = "";
             Map<String,String[]> map = new HashMap<>();
              for(Map.Entry<String,JsonElement> entry : entradas){
                 //System.out.println(entry.getValue()+"go");
+                if(entry.getKey().equals("title")){
+                    tmp = entry.getValue().getAsString();
+                }   
                 if(entry.getKey().equals("cast")){
                     //System.out.println(entry);
                     for(String actors :dumpJSONElement(entry.getValue().getAsJsonArray())){
@@ -50,10 +54,11 @@ public class Logica {
                 }
             } 
             System.out.println("ACTORES");
+            
             for(String actI : listaActores){
                 for(String actS : listaActores){
                     if(!actI.equals(actS))
-                        grafoPeliculas.addEdge(actI , actS , (int) Math.random()); 
+                        grafoPeliculas.addEdge(actI , actS, tmp); 
                 }                        
             }
             System.out.println("EDGES");
@@ -98,8 +103,7 @@ public class Logica {
         try {
             BufferedReader fr = new BufferedReader(new FileReader("src\\Datos\\"+texto));
             String linea="";
-            while(linea!=null){
-                linea=fr.readLine();
+            while((linea = fr.readLine()) != null){
                 JsonElement datos = parser.parse(linea);
                 dumpJSONElement(datos);
             }
@@ -109,9 +113,5 @@ public class Logica {
             Logger.getLogger(Logica.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void main(String[] args){
-        cargarPeliculas("data2.txt");
-    }
-
 
 }

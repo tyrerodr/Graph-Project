@@ -59,7 +59,7 @@ public class GraphLA<E> {
         return vertexes.remove(vi);
     }
 
-    public boolean addEdge(E src, E dst, int peso) {
+    public boolean addEdge(E src, E dst, String peso) {
         if (src == null || dst == null) {
             return false;
         }
@@ -158,10 +158,10 @@ public class GraphLA<E> {
         if (vs == null || vd == null) {
             return false;
         }
-        Edge<E> e = new Edge<>(0, vs, vd);
+        Edge<E> e = new Edge<>("", vs, vd);
         vs.getEdges().remove(e);
         if (!directed) {
-            e = new Edge<>(0, vd, vs);
+            e = new Edge<>("", vd, vs);
             vd.getEdges().remove(e);
         }
         return true;
@@ -271,53 +271,53 @@ public class GraphLA<E> {
         return result;
     }
     
-    public GraphLA<E> kruskal(){
-        GraphLA<E> kruskal = new GraphLA<>(directed);
-        PriorityQueue<Edge<E>> cola = new PriorityQueue<>((Edge<E> e1,Edge<E> e2)->(e1.getPeso()-e2.getPeso()));
-        for(Vertex<E> v :vertexes){
-            kruskal.addVertex(v.getData());
-        }
-        for(Vertex<E> v : vertexes){
-            for(Edge<E> e: v.getEdges()){
-                cola.offer(e);
-            }
-        }
-        
-        while(!kruskal.isConnected()){
-            List<Set<E>> lista = kruskal.connectedComponents();
-            Edge<E> edge = cola.poll();
-            for(Set<E> conjunto:lista){
-                if(conjunto.contains(edge.getVOrigen().getData()) && !conjunto.contains(edge.getVDestino().getData())){
-                    kruskal.addEdge(edge.getVOrigen().getData(),edge.getVDestino().getData(),edge.getPeso());
-                }
-            }
-        }
-        return kruskal;
-        
-    }
-    public GraphLA prim(){
-        GraphLA<E> prim = new GraphLA<>(directed);
-        PriorityQueue<Edge<E>> colaEdges = new PriorityQueue<>((Edge<E> e1, Edge<E> e2)->(e1.getPeso()-e2.getPeso()));
-        for(Vertex<E> v :vertexes){
-            prim.addVertex(v.getData());
-        }
-        Vertex<E> vo = vertexes.get(0);
-        vo.setVisited(true);
-        int visitados=1;
-        while(visitados<prim.vertexes.size()){
-            for(Edge<E> e: vo.getEdges()){
-                if(!e.getVDestino().isVisited())
-                    colaEdges.add(e);
-            }
-            Edge<E> edge = colaEdges.poll();
-            edge.getVDestino().setVisited(true);
-            prim.addEdge(edge.getVOrigen().getData(),edge.getVDestino().getData(),edge.getPeso());
-            vo = edge.getVDestino();
-            visitados++;
-        }
-        cleanVertexes();
-        return prim;
-    }
+//    public GraphLA<E> kruskal(){
+//        GraphLA<E> kruskal = new GraphLA<>(directed);
+//        PriorityQueue<Edge<E>> cola = new PriorityQueue<>((Edge<E> e1,Edge<E> e2)->(e1.getPeso()-e2.getPeso()));
+//        for(Vertex<E> v :vertexes){
+//            kruskal.addVertex(v.getData());
+//        }
+//        for(Vertex<E> v : vertexes){
+//            for(Edge<E> e: v.getEdges()){
+//                cola.offer(e);
+//            }
+//        }
+//        
+//        while(!kruskal.isConnected()){
+//            List<Set<E>> lista = kruskal.connectedComponents();
+//            Edge<E> edge = cola.poll();
+//            for(Set<E> conjunto:lista){
+//                if(conjunto.contains(edge.getVOrigen().getData()) && !conjunto.contains(edge.getVDestino().getData())){
+//                    kruskal.addEdge(edge.getVOrigen().getData(),edge.getVDestino().getData(),edge.getPeso());
+//                }
+//            }
+//        }
+//        return kruskal;
+//        
+//    }
+//    public GraphLA prim(){
+//        GraphLA<E> prim = new GraphLA<>(directed);
+//        PriorityQueue<Edge<E>> colaEdges = new PriorityQueue<>((Edge<E> e1, Edge<E> e2)->(e1.getPeso()-e2.getPeso()));
+//        for(Vertex<E> v :vertexes){
+//            prim.addVertex(v.getData());
+//        }
+//        Vertex<E> vo = vertexes.get(0);
+//        vo.setVisited(true);
+//        int visitados=1;
+//        while(visitados<prim.vertexes.size()){
+//            for(Edge<E> e: vo.getEdges()){
+//                if(!e.getVDestino().isVisited())
+//                    colaEdges.add(e);
+//            }
+//            Edge<E> edge = colaEdges.poll();
+//            edge.getVDestino().setVisited(true);
+//            prim.addEdge(edge.getVOrigen().getData(),edge.getVDestino().getData(),edge.getPeso());
+//            vo = edge.getVDestino();
+//            visitados++;
+//        }
+//        cleanVertexes();
+//        return prim;
+//    }
 
 
     public void dijkstra(E inicio){

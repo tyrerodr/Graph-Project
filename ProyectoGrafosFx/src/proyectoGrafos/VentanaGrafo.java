@@ -109,8 +109,7 @@ public final class VentanaGrafo {
             return rootDibujo; 
         }
         
-        for(Vertex<String> v : recorrido){
-              System.out.println(v); 
+
 //            if(!e.getVDestino().getData().equals(ini) && val){
 //            prueba.getChildren().add(new Label(e.getVDestino().getData()));
 //            prueba.getChildren().add(new Label("Was in"));
@@ -125,7 +124,7 @@ public final class VentanaGrafo {
 //                parte.getChildren().add(new Label("with"));
 //            }
     
-        }
+        
         
         prueba.setAlignment(Pos.CENTER);
         rootDibujo.getChildren().add(prueba);

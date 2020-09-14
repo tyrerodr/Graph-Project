@@ -19,12 +19,12 @@ import static javafx.application.Application.launch;
  */
 public class ProyectoGrafos extends Application {
     public static Scene scene;
-    public static int horaTamaño = 300;
     
     @Override
     public void init(){
-        Logica.cargarPeliculas("data.txt");
-            }
+       Logica.cargarPeliculas("data2.txt");
+           
+    }
 
     public void start(Stage primaryStage){      
         VentanaGrafo i = new VentanaGrafo();
@@ -32,7 +32,7 @@ public class ProyectoGrafos extends Application {
         primaryStage.setTitle("PROYECTO GRAFOS");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
+       
     }
     
     @Override

@@ -14,21 +14,21 @@ import java.util.Objects;
  * @author Bryan
  */
 public class Edge <E>{
-    private int peso;
+    private String peso;
     private Vertex<E> vo;
     private Vertex<E> vd;
 
-    public Edge(int peso, Vertex<E> vo, Vertex<E> vd) {
+    public Edge(String peso, Vertex<E> vo, Vertex<E> vd) {
         this.peso = peso;
         this.vo = vo;
         this.vd = vd;
     }
 
-    public int getPeso() {
+    public String getPeso() {
         return peso;
     }
 
-    public void setPeso(int peso) {
+    public void setPeso(String peso) {
         this.peso = peso;
     }
 
