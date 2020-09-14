@@ -166,14 +166,6 @@ public class GraphLA<E> {
         sbra.append("}");
         return sbrv.toString() + "\n" + sbra.toString();
     }
-//
-//    public boolean isConnected() {
-//        if(directed && connectedComponents().size()!=1) return false;
-//        if(directed && connectedComponents().size()==1) return true;
-//        if(!directed && connectedComponents().size()!=1) return false;
-//        if(!directed && connectedComponents().size()==1) return true;
-//        return false;
-//    }
 
     public GraphLA<E> reverse() {
         GraphLA<E> grafo = new GraphLA<E>(directed); 
@@ -203,23 +195,7 @@ public class GraphLA<E> {
         return vertexes;
     }
 
-//    public List<Set<E>> connectedComponents() {
-//        LinkedList<Set<E>> result = new LinkedList<>();
-//        GraphLA<E> reversed = reverse();
-//        Set<E> componentes = new HashSet<>(getVertexes());
-//        while(!componentes.isEmpty()){
-//            E origen = (E) componentes.toArray()[0];
-//            List<E> bfsNormal = bfs(origen);
-//            List<E> bfsInvertido = reversed.bfs(origen);
-//            Set<E> conjBfsN = new HashSet<>(bfsNormal);
-//            Set<E> conjBfsI = new HashSet<>(bfsInvertido);
-//            conjBfsN.retainAll(conjBfsI);
-//            componentes.removeAll(conjBfsN);
-//            result.add(conjBfsN);    
-//        }
-//        return result;
-//    }
-    
+
 
     private void dijkstra(E inicio){
         Vertex<E> v = searchVertex(inicio);

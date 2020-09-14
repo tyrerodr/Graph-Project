@@ -20,6 +20,7 @@ public class Vertex<E> {
     private boolean visited; 
     private int distancia;
     private Vertex<E> antecesor;
+    private String movie;
 
     public Vertex(E data) {
         this.data = data;
@@ -66,6 +67,14 @@ public class Vertex<E> {
 
     public void setAntecesor(Vertex<E> antecesor) {
         this.antecesor = antecesor;
+    }
+
+    public String getMovie() {
+        return movie;
+    }
+
+    public void setMovie(String movie) {
+        this.movie = movie;
     }
     
     

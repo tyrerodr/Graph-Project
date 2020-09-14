@@ -51,10 +51,11 @@ public class Logica {
             } 
             System.out.println("ACTORES");
             
-            for(String actI : listaActores){
-                for(String actS : listaActores){
+            for(Vertex<String> actI : grafoPeliculas.getVertexe()){
+                for(Vertex<String> actS : grafoPeliculas.getVertexe()){
                     if(!actI.equals(actS))
-                        grafoPeliculas.addEdge(actI , actS, tmp); 
+                        actS.setMovie(tmp);
+                        grafoPeliculas.addEdge(actI.getData() , actS.getData(), tmp); 
                 }                        
             }
             System.out.println("EDGES");
