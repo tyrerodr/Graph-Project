@@ -164,6 +164,9 @@ public final class VentanaGrafo {
                 dibujoCaminos.setId("vResults");
                 while(litD.hasNext()){
                     Vertex<String> i = litD.next();
+                    for(Vertex<String> vrt : camD){
+                        Logica.grafoPeliculas.addEdge(i.getData(), vrt.getData(),"NOMBRE DE PELICULA" );                        
+                    }
                     dibujoCaminos.getChildren().add(new Label(i.getData()));
 //                    if(litD.previousIndex()%2==0){
 //                        Label lAct = new Label(i);
@@ -209,6 +212,9 @@ public final class VentanaGrafo {
                 dibujoCaminos.setId("vResults");
                 while(litD.hasNext()){
                     Vertex<String> i = litD.next();
+                    for(Vertex<String> vrt : camD){
+                        Logica.grafoPeliculas.addEdge(i.getData(), vrt.getData(),"NOMBRE DE PELICULA" );                        
+                    }
                     dibujoCaminos.getChildren().add(new Label(i.getData()));
 //                    if(litD.previousIndex()%2==0){
 //                        Label lAct = new Label(i);
