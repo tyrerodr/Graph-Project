@@ -25,8 +25,6 @@ import Datos.Logica;
 import TDA.*;
 import java.util.Iterator;
 import java.util.List;
-import javafx.scene.shape.Rectangle;
-import static javax.swing.text.StyleConstants.Background;
 
 /**
  *
