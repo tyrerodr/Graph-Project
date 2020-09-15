@@ -22,7 +22,7 @@ public class ProyectoGrafos extends Application {
     
     @Override
     public void init(){
-       Logica.cargarPeliculas("data2.txt");
+       Logica.cargarPeliculas("data.txt");
            
     }
 
